@@ -68,7 +68,7 @@ if args.server :
     
     death_note()
 if args.port_scanner :
-    os.system("python port_scanner.py ")
+    os.system("python3 port_scanner.py ")
 
 
 
