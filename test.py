@@ -24,7 +24,7 @@ print ("Use -h to see the options")
 #ddos tool 
 def death_note():
     target = args.server
-    port = input("[+]Port for attacking : ")
+    port = int(input("[+]Port for attacking : "))
     fake_ip = '192.168.0.1'
     def attack():
         while True:
